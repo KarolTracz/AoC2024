@@ -59,7 +59,7 @@ def second_star(map):
     print(f'{antennas=}')
     for k, v in antennas.items():
         for comb in combinations(v, 2):
-            for iteration in range(1, 50):
+            for iteration in range(51):
                 x, y = (comb[0][0] - comb[1][0]), (comb[0][1] - comb[1][1])
                 x1, y1 = comb[0][0] + x * iteration, comb[0][1] + y * iteration
                 x2, y2 = comb[1][0] - x * iteration, comb[1][1] - y * iteration
