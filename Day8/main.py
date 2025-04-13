@@ -8,7 +8,6 @@ with open('input.txt', 'r') as f:
 
 
 def first_star(map):
-    print(f'{'-'* 10} first_star {'-'* 10}')
     antennas = {}
     antinodes = []
 
@@ -33,16 +32,52 @@ def first_star(map):
                     pass
                 else:
                     antinodes.append((x1, y1))
-
                 if len(map) <= x2 or x2 < 0 or len(row) <= y2 or y2 < 0:
                     pass
                 else:
                     antinodes.append((x2, y2))
             except IndexError:
                 pass
+    result = len(set(antinodes))
+    return result
 
-    return len(set(antinodes))
+
+def second_star(map):
+    antennas = {}
+    antinodes = []
+
+    for i, row in enumerate(map):
+        for j, char in enumerate(row):
+            if char != '.':
+                if char in antennas:
+                    tmp = antennas[char]
+                    tmp.append([i, j])
+                    antennas[char] = tmp
+                else:
+                    antennas[str(char)] = [[i, j]]
+
+    print(f'{antennas=}')
+    for k, v in antennas.items():
+        for comb in combinations(v, 2):
+            for iteration in range(1, 50):
+                x, y = (comb[0][0] - comb[1][0]), (comb[0][1] - comb[1][1])
+                x1, y1 = comb[0][0] + x * iteration, comb[0][1] + y * iteration
+                x2, y2 = comb[1][0] - x * iteration, comb[1][1] - y * iteration
+                try:
+                    if len(map) <= x1 or x1 < 0 or len(row) <= y1 or y1 < 0:
+                        pass
+                    else:
+                        antinodes.append((x1, y1))
+                    if len(map) <= x2 or x2 < 0 or len(row) <= y2 or y2 < 0:
+                        pass
+                    else:
+                        antinodes.append((x2, y2))
+                except IndexError:
+                    pass
+    result = len(set(antinodes))
+    return result
 
 
 if __name__ == '__main__':
     print(first_star(data))
+    print(second_star(data))
