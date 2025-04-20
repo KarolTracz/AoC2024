@@ -3,6 +3,7 @@ with open('input_test.txt', 'r') as f:
     raw_data = f.readlines()
     data = [i.strip() for i in raw_data]
 
+
 def find_zero(height_map: [str]) -> [(int, int), (int, int)]:
     zeros = []
 
@@ -12,13 +13,32 @@ def find_zero(height_map: [str]) -> [(int, int), (int, int)]:
                 zeros.append((i, j))
     return zeros
 
-def find_neighbour(height_map:[str], position: (int, int)):
-    pass
+
+def find_neighbour(height_map:[str], position: (int, int), seeking_value: int) -> [(True, (int, int))]:
+    result = []
+
+    neighbours = ((-1, 0), (0, -1), (1, 0), (0, 1))
+    try:
+        for i in neighbours:
+            x, y = position[0] + i[0], position[1] + i[1]
+            if x < 0 or y < 0:
+                continue
+            if height_map[x][y] == seeking_value:
+                result.append((True, (x, y)))
+            else:
+                result.append((False, (x, y)))
+    except IndexError:
+        pass
+
+    return result
+
 
 def fine_all_1_to_9(height_map, start_position:(int, int)):
     slope = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    find_neighbour(height_map, start_position)
-    pass
+    for i in slope:
+        list_ = find_neighbour(height_map=height_map, position=start_position, seeking_value=i)
+        print(list_)
+
 
 def first_star(data):
     zeros = find_zero(height_map=data)
