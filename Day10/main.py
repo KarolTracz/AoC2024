@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
-with open('input_test.txt', 'r') as f:
-# with open('input.txt', 'r') as f:
+# with open('input_test.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     raw_data = f.readlines()
     data = [i.strip() for i in raw_data]
 
@@ -36,7 +36,7 @@ def find_neighbour(height_map:[str], position: (int, int), seeking_value: int) -
     return result
 
 
-def find_all_1_to_9(height_map, start_position: Tuple[int]):
+def find_1_to_9(height_map, start_position: Tuple[int]):
     paths = {
         pos
         for found, pos in find_neighbour(height_map, start_position, 1)
@@ -53,8 +53,33 @@ def find_all_1_to_9(height_map, start_position: Tuple[int]):
 
     return len(paths)
 
+def find_all_1_to_9(height_map, start_position: Tuple[int]):
+    paths = [
+        pos
+        for found, pos in find_neighbour(height_map, start_position, 1)
+        if found
+    ]
+
+    for i in range(2, 10):
+        paths = [
+            new_pos
+            for pos in paths
+            for found, new_pos in find_neighbour(height_map, pos, i)
+            if found
+        ]
+
+    return len(paths)
+
 
 def first_star(data):
+    result = 0
+    zeros = find_zero(height_map=data)
+    for position in zeros:
+        result += find_1_to_9(height_map=data, start_position=position)
+    print(f'first_star {result=}')
+
+
+def second_star(data):
     result = 0
     zeros = find_zero(height_map=data)
     for position in zeros:
@@ -62,10 +87,6 @@ def first_star(data):
     print(f'first_star {result=}')
 
 
-def second_star():
-    pass
-
-
 if __name__ == '__main__':
     first_star(data)
-    second_star()
+    second_star(data)
