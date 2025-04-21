@@ -37,34 +37,21 @@ def find_neighbour(height_map:[str], position: (int, int), seeking_value: int) -
 
 
 def find_all_1_to_9(height_map, start_position: Tuple[int]):
-    score = 0
-    slope = (2, 3, 4, 5, 6, 7, 8, 9)
-    paths = []
+    paths = {
+        pos
+        for found, pos in find_neighbour(height_map, start_position, 1)
+        if found
+    }
 
-    neighbours = find_neighbour(height_map=height_map, position=start_position, seeking_value=1)
-    for neighbour in neighbours:
-        if neighbour[0]:
-            paths.append((1, neighbour[1]))
-        else:
-            pass
+    for i in range(2, 10):
+        paths = {
+            new_pos
+            for pos in paths
+            for found, new_pos in find_neighbour(height_map, pos, i)
+            if found
+        }
 
-    for path in paths:
-        for i in slope:
-            if (path[0] + 1) == i:
-                start_position = path[1]
-            else:
-                continue
-            neighbours = find_neighbour(height_map=height_map, position=start_position, seeking_value=i)
-            for neighbour in neighbours:
-                if neighbour[0] == True:
-                    paths.append((i, neighbour[1]))
-                else:
-                    pass
-
-    for path in paths:
-        if path[0] == 9:
-            score += 1
-    return score
+    return len(paths)
 
 
 def first_star(data):
