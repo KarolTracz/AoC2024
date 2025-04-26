@@ -1,7 +1,7 @@
 from typing import List
 
-with open('input_test.txt', 'r') as f:
-# with open('input.txt', 'r') as f:
+# with open('input_test.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     puzzle_input = f.readline().split()
 
 def blink(data: List[str]) -> List[str]:
@@ -22,9 +22,13 @@ def blink(data: List[str]) -> List[str]:
 def first_star(data):
     result = 0
     print(f'{data=}')
-    blint_1 = blink(data)
-    print(blint_1)
-    print(blink(blint_1))
+
+    number_of_blinks = 25
+    blint_data = blink(data)
+    for _ in range(number_of_blinks-1):
+        new_blink_data = blink(blint_data)
+        blint_data = new_blink_data
+    result += len(blint_data)
     print(f'first_star {result=}')
 
 
