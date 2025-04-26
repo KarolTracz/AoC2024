@@ -1,7 +1,5 @@
-from typing import List, Tuple
-
-# with open('input_test.txt', 'r') as f:
-with open('input.txt', 'r') as f:
+git statuswith open('input_test.txt', 'r') as f:
+# with open('input.txt', 'r') as f:
     raw_data = f.readlines()
     data = [i.strip() for i in raw_data]
 
