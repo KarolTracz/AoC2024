@@ -1,11 +1,30 @@
-git statuswith open('input_test.txt', 'r') as f:
+from typing import List
+
+with open('input_test.txt', 'r') as f:
 # with open('input.txt', 'r') as f:
-    raw_data = f.readlines()
-    data = [i.strip() for i in raw_data]
+    puzzle_input = f.readline().split()
+
+def blink(data: List[str]) -> List[str]:
+    result = []
+
+    for i in data:
+        if len(i) % 2 == 0:
+            result.append(str(int(i[:len(i)//2])))
+            result.append(str(int(i[len(i)//2:])))
+        elif i == '0':
+            result.append('1')
+        else:
+            result.append(str(int(i)*2024))
+
+    return result
 
 
 def first_star(data):
     result = 0
+    print(f'{data=}')
+    blint_1 = blink(data)
+    print(blint_1)
+    print(blink(blint_1))
     print(f'first_star {result=}')
 
 
@@ -15,5 +34,5 @@ def second_star(data):
 
 
 if __name__ == '__main__':
-    first_star(data)
-    second_star(data)
+    first_star(puzzle_input)
+    second_star(puzzle_input)
