@@ -9,18 +9,19 @@ with open('input_test.txt', 'r') as f:
 def first_star(data):
     result = 0
 
-    print(data)
-
-    arcade_machines = {}
+    arcade_machines = []
 
     for i, line in enumerate(data):
         if i % 3 == 0:
-            arcade_machines[i//3] = {'A': line, 'B': data[i+1], 'Prize': data[i+2]}
+            A_button = [int(i) for i in line]
+            B_button = [int(i) for i in data[i + 1]]
+            Prize = [int(i) for i in data[i + 2]]
+            arcade_machines.append({'A': A_button, 'B': B_button, 'Prize': Prize})
 
-    print(arcade_machines)
+    for i in arcade_machines:
+        print(i)
 
-    for k, v in arcade_machines.items():
-        print(k, v)
+
 
     print(f'first_star {result=}')
 
